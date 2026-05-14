@@ -4,6 +4,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -46,7 +48,8 @@ class HermesApi(
             if (it.startsWith("http://") || it.startsWith("https://")) it
             else "https://$it"
         }
-        val payload = """{"password":${json.encodeToString(kotlinx.serialization.builtins.serializer<String>(), token)}}"""
+        // Build the JSON body via the JSON DSL so the password is correctly escaped.
+        val payload = buildJsonObject { put("password", token) }.toString()
 
         val req = Request.Builder()
             .url("$cleanUrl/api/auth/login")
