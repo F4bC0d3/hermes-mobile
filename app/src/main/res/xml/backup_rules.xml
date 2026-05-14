@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Don't back up encrypted credentials; let user re-login on restore. -->
+    <exclude domain="sharedpref" path="hermes_session.xml" />
+</full-backup-content>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Hermes.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#0B0B12</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_hermes_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.Hermes</item>
+    </style>
+    <style name="Theme.Hermes" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">#00000000</item>
+        <item name="android:navigationBarColor">#00000000</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+</resources>
