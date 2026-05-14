@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Splash icon = the same wing mark, on transparent (splash uses windowSplashScreenBackground for color). -->
+<!--
+  Hermes Mobile — adaptive icon foreground.
+  Viewport: 108x108 dp. Safe zone for content: a centered circle of diameter 66 dp.
+  Artwork is centered around (54,54) and stays within radius ~33 to survive any
+  launcher mask (circle, squircle, square, teardrop).
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="288dp"
-    android:height="288dp"
+    android:width="108dp"
+    android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+
+  <!-- Soft glow halo behind the wing -->
   <path
-      android:fillColor="#7C6CF2"
-      android:fillAlpha="0.18"
+      android:fillColor="#3D2D80FF"
       android:pathData="M54,54m-32,0a32,32 0 1,0 64,0a32,32 0 1,0 -64,0z" />
+  <path
+      android:fillColor="#1A60A5FA"
+      android:pathData="M54,54m-26,0a26,26 0 1,0 52,0a26,26 0 1,0 -52,0z" />
+
+  <!-- Left wing — primary feathers -->
   <path
       android:fillColor="#FFFFFF"
       android:pathData="M54,42
@@ -25,6 +36,8 @@
         c1.2,2 3,3.5 5.5,4
         c0.2,-2 1,-3.5 2.5,-4.5
         Z" />
+
+  <!-- Right wing — primary feathers (mirrored) -->
   <path
       android:fillColor="#FFFFFF"
       android:pathData="M54,42
@@ -41,10 +54,21 @@
         c-1.2,2 -3,3.5 -5.5,4
         c-0.2,-2 -1,-3.5 -2.5,-4.5
         Z" />
-  <path android:fillColor="#FFFFFF"
-        android:pathData="M48,42 L60,42 L60,46 L48,46 Z" />
-  <path android:fillColor="#FFFFFF"
-        android:pathData="M52.5,46 L55.5,46 L55.5,72 L52.5,72 Z" />
-  <path android:fillColor="#FFFFFF"
-        android:pathData="M54,76 l-3,-4 l6,0 z" />
+
+  <!-- Center band / sandal strap -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:pathData="M48,42 L60,42 L60,46 L48,46 Z" />
+
+  <!-- Caduceus shaft — vertical line down the middle -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:fillAlpha="0.92"
+      android:pathData="M52.5,46 L55.5,46 L55.5,72 L52.5,72 Z" />
+
+  <!-- Shaft tip -->
+  <path
+      android:fillColor="#FFFFFF"
+      android:fillAlpha="0.92"
+      android:pathData="M54,76 l-3,-4 l6,0 z" />
 </vector>

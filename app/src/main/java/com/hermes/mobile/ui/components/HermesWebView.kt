@@ -113,7 +113,7 @@ fun HermesWebView(
                     cookieManager.setAcceptThirdPartyCookies(this, false)
                     sessionStore.spaceUrl?.let { url ->
                         sessionStore.sessionCookie?.let { cookie ->
-                            cookieManager.setCookie(url, "webui_session=$cookie; Path=/; HttpOnly")
+                            cookieManager.setCookie(url, "hermes_session=$cookie; Path=/; HttpOnly")
                             cookieManager.flush()
                         }
                     }
