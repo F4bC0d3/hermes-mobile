@@ -6,7 +6,6 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.hermes.mobile.ui.HermesAppRoot
 import com.hermes.mobile.ui.theme.HermesTheme
+import com.hermes.mobile.ui.theme.HermesTheme as ThemePalette
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,16 +29,18 @@ class MainActivity : ComponentActivity() {
         setContent {
             val app = HermesApp.instance
             val store = app.sessionStore
-            var dark by remember { mutableStateOf(store.darkTheme) }
+            var theme by remember {
+                mutableStateOf(runCatching { ThemePalette.valueOf(store.theme) }.getOrDefault(ThemePalette.DARK))
+            }
 
-            HermesTheme(darkTheme = dark) {
+            HermesTheme(theme = theme) {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     HermesAppRoot(
                         sessionStore = store,
-                        darkTheme = dark,
-                        onToggleTheme = {
-                            dark = !dark
-                            store.darkTheme = dark
+                        currentTheme = theme,
+                        onThemeChange = {
+                            theme = it
+                            store.theme = it.name
                         },
                     )
                 }

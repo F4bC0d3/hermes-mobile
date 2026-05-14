@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 class ChatViewModel(
     private val api: HermesApi,
     private val sse: HermesSseClient,
+    private val sessionStore: com.hermes.mobile.data.SessionStore? = null,
 ) : ViewModel() {
 
     var sessionId by mutableStateOf<String?>(null)
@@ -108,6 +109,7 @@ class ChatViewModel(
                 sessionId = sid,
                 message = message,
                 attachments = attachments,
+                model = sessionStore?.defaultModel,
             )
             if (newStreamId.isNullOrBlank()) {
                 mutateAssistant(assistantIdx) { it.copy(streaming = false, content = "_failed to start stream_", error = true) }

@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hermes.mobile.ui.screens.ChatBubble
 import com.hermes.mobile.ui.screens.ToolCallView
+import com.hermes.mobile.ui.theme.LocalHermesAccents
 
 /**
  * A single chat row. ChatGPT/Claude-style:
@@ -62,13 +63,14 @@ fun ChatRow(bubble: ChatBubble) {
 
 @Composable
 private fun UserBubble(bubble: ChatBubble) {
+    val accents = LocalHermesAccents.current
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End,
     ) {
         Surface(
             shape = RoundedCornerShape(20.dp, 20.dp, 4.dp, 20.dp),
-            color = MaterialTheme.colorScheme.primary,
+            color = accents.userBubble,
             modifier = Modifier.widthIn(max = 320.dp),
         ) {
             Column(modifier = Modifier.padding(14.dp)) {
@@ -76,7 +78,7 @@ private fun UserBubble(bubble: ChatBubble) {
                     bubble.attachments.forEach { a ->
                         Text(
                             text = "📎 ${a.name}",
-                            color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.85f),
+                            color = accents.userBubbleOn.copy(alpha = 0.85f),
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
@@ -85,7 +87,7 @@ private fun UserBubble(bubble: ChatBubble) {
                 if (bubble.content.isNotBlank()) {
                     Text(
                         text = bubble.content,
-                        color = MaterialTheme.colorScheme.onPrimary,
+                        color = accents.userBubbleOn,
                         style = MaterialTheme.typography.bodyLarge,
                     )
                 }
@@ -136,7 +138,7 @@ private fun AssistantBubble(bubble: ChatBubble) {
 @Composable
 private fun ReasoningCard(text: String) {
     var expanded by remember { mutableStateOf(false) }
-    val gold = androidx.compose.ui.graphics.Color(0xFFCAA94B)
+    val gold = LocalHermesAccents.current.thinking
     Surface(
         shape = RoundedCornerShape(10.dp),
         color = gold.copy(alpha = 0.10f),

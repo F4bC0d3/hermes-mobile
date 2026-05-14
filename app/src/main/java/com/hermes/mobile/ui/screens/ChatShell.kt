@@ -74,12 +74,13 @@ fun ChatShell(
     sessionStore: SessionStore,
     api: HermesApi,
     sse: HermesSseClient,
-    darkTheme: Boolean,
-    onToggleTheme: () -> Unit,
+    currentTheme: com.hermes.mobile.ui.theme.HermesTheme,
     onLogout: () -> Unit,
     onOpenMemory: () -> Unit,
     onOpenWorkspace: () -> Unit,
     onOpenProfiles: () -> Unit,
+    onOpenModels: () -> Unit,
+    onOpenSettings: () -> Unit,
     onActiveSessionChanged: (String?) -> Unit = {},
 ) {
     val context = LocalContext.current
@@ -87,7 +88,7 @@ fun ChatShell(
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val snackbar = remember { SnackbarHostState() }
 
-    val viewModel = remember(api, sse) { ChatViewModel(api, sse) }
+    val viewModel = remember(api, sse) { ChatViewModel(api, sse, sessionStore) }
     val state by viewModel.state.collectAsState()
 
     var sessions by remember { mutableStateOf<List<SessionEntry>>(emptyList()) }
@@ -296,19 +297,27 @@ fun ChatShell(
 
     if (menuOpen) {
         AppMenuSheet(
-            darkTheme = darkTheme,
+            currentTheme = currentTheme,
             onDismiss = { menuOpen = false },
-            onToggleTheme = {
-                onToggleTheme()
+            onOpenModels = {
                 menuOpen = false
+                onOpenModels()
             },
-            onOpenSettings = {
+            onOpenProfiles = {
                 menuOpen = false
                 onOpenProfiles()
             },
-            onOpenDashboard = {
+            onOpenMemory = {
                 menuOpen = false
                 onOpenMemory()
+            },
+            onOpenWorkspace = {
+                menuOpen = false
+                onOpenWorkspace()
+            },
+            onOpenSettings = {
+                menuOpen = false
+                onOpenSettings()
             },
             onReload = {
                 viewModel.sessionId?.let { id -> viewModel.loadSession(id) }
@@ -318,33 +327,11 @@ fun ChatShell(
                 menuOpen = false
                 onLogout()
             },
-            extra = {
-                AppMenuItem("Workspace files") {
-                    menuOpen = false
-                    onOpenWorkspace()
-                }
-            },
         )
     }
 
     state.error?.let { err ->
         LaunchedEffect(err) { snackbar.showSnackbar(err) }
-    }
-}
-
-@Composable
-fun AppMenuItem(label: String, onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(horizontal = 20.dp, vertical = 14.dp),
-    ) {
-        Text(
-            label,
-            style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.onSurface,
-        )
     }
 }
 

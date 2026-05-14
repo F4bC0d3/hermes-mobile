@@ -41,6 +41,14 @@ class SessionStore(context: Context) {
         get() = prefs.getBoolean(KEY_DARK, true)
         set(value) = prefs.edit().putBoolean(KEY_DARK, value).apply()
 
+    var theme: String
+        get() = prefs.getString(KEY_THEME, "DARK") ?: "DARK"
+        set(value) = prefs.edit().putString(KEY_THEME, value).apply()
+
+    var defaultModel: String?
+        get() = prefs.getString(KEY_MODEL, null)
+        set(value) = prefs.edit().putString(KEY_MODEL, value).apply()
+
     fun isConfigured(): Boolean = !spaceUrl.isNullOrBlank() && !gatewayToken.isNullOrBlank()
 
     fun clear() {
@@ -52,5 +60,7 @@ class SessionStore(context: Context) {
         private const val KEY_TOKEN = "gateway_token"
         private const val KEY_COOKIE = "webui_cookie"
         private const val KEY_DARK = "dark_theme"
+        private const val KEY_THEME = "theme_name"
+        private const val KEY_MODEL = "default_model"
     }
 }
