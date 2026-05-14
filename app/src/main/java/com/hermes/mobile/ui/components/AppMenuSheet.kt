@@ -39,6 +39,7 @@ fun AppMenuSheet(
     onOpenDashboard: () -> Unit,
     onReload: () -> Unit,
     onLogout: () -> Unit,
+    extra: @androidx.compose.runtime.Composable () -> Unit = {},
 ) {
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -55,9 +56,10 @@ fun AppMenuSheet(
                 label = if (darkTheme) "Light theme" else "Dark theme",
                 onClick = onToggleTheme,
             )
-            MenuItem(Icons.Filled.Settings, "Hermes settings", onOpenSettings)
-            MenuItem(Icons.Filled.Dashboard, "HuggingMes dashboard", onOpenDashboard)
-            MenuItem(Icons.Filled.Refresh, "Reload", onReload)
+            MenuItem(Icons.Filled.Settings, "Profiles & models", onOpenSettings)
+            MenuItem(Icons.Filled.Dashboard, "Memory", onOpenDashboard)
+            extra()
+            MenuItem(Icons.Filled.Refresh, "Reload session", onReload)
             Spacer(Modifier.padding(top = 4.dp))
             MenuItem(
                 icon = Icons.AutoMirrored.Filled.Logout,
